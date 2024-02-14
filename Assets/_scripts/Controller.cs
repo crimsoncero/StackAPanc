@@ -6,7 +6,10 @@ public class Controller : MonoBehaviour
 {
     [SerializeField] private Transform _spatula;
     [SerializeField] private GameObject _pancakePrefab;
+    [SerializeField] private Transform _cameraTransform;
 
+    [SerializeField] private int _minimumPancakeThreshold;
+    [SerializeField] private float _heightChangeStep = 1f;
     [SerializeField] public int _pancakeCount = 0;
     [SerializeField] private OOBTrigger _oobTriger;
 
@@ -25,8 +28,19 @@ public class Controller : MonoBehaviour
         {
             DropPancake();
         }
+
     }
 
+   
+    void UpdateHeight(bool moveUp)
+    {
+            if (_pancakeCount >= _minimumPancakeThreshold)
+            {
+                float heightChange = moveUp ? _heightChangeStep : _heightChangeStep * -1;
+                _cameraTransform.DOMoveY(_cameraTransform.position.y + heightChange, 0.5f);
+                _spatula.DOMoveY(_spatula.position.y + heightChange, 0.5f);
+            }
+    }
     void DropPancake()
     {
         Vector3 pancakePos = new Vector3(_spatula.position.x, _spatula.position.y + 0.75f, _spatula.position.z);
@@ -35,6 +49,8 @@ public class Controller : MonoBehaviour
 
         _spatula.gameObject.SetActive(false);
         StartCoroutine(TimerForNextPancake(3));
+        UpdateHeight(true);
+        
     }
 
     IEnumerator TimerForNextPancake(float delay)
@@ -51,8 +67,10 @@ public class Controller : MonoBehaviour
 
     public void PancakeFallen()
     {
+        UpdateHeight(false);
         _pancakeCount--;
         Debug.Log("A pancake has fallen, current pancake count is :" + _pancakeCount);
+        
     }
 }
 
