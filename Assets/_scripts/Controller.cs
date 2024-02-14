@@ -7,11 +7,14 @@ public class Controller : MonoBehaviour
     [SerializeField] private Transform _spatula;
     [SerializeField] private GameObject _pancakePrefab;
     [SerializeField] private Transform _cameraTransform;
+    [SerializeField] private Transform _dropPosition;
 
     [SerializeField] private int _minimumPancakeThreshold;
     [SerializeField] private float _heightChangeStep = 1f;
     [SerializeField] public int _pancakeCount = 0;
     [SerializeField] private OOBTrigger _oobTriger;
+
+    private bool _canDrop = true;
 
 
     // Start is called before the first frame update
@@ -24,10 +27,15 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(Input.touchCount > 0)
         {
-            DropPancake();
-        }
+            Touch touch = Input.GetTouch(0);
+            if(touch.phase == TouchPhase.Began)
+            {
+                DropPancake();
+            }
+        } 
+       
 
     }
 
@@ -43,7 +51,9 @@ public class Controller : MonoBehaviour
     }
     void DropPancake()
     {
-        Vector3 pancakePos = new Vector3(_spatula.position.x, _spatula.position.y + 0.75f, _spatula.position.z);
+        if (_canDrop == false) return;
+        _canDrop = false;
+        Vector3 pancakePos = _dropPosition.position;
         GameObject pancake = Instantiate(_pancakePrefab, pancakePos, Quaternion.identity);
         _pancakeCount++;
 
@@ -57,12 +67,13 @@ public class Controller : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         _spatula.gameObject.SetActive(true);
+        _canDrop = true;
        
     }
 
     void SpatulaMove()
     {
-        _spatula.DOMoveX(-6.5f, 3).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        _spatula.DOMoveX(-5f, 3).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void PancakeFallen()
