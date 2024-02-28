@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.04, y: -4.8, z: 0}
-  m_LocalScale: {x: 4.3372374, y: 0.39, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d6a83250ff1cdf14794dccaafa612ff4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -146,18 +146,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.00000023841858, y: -0.0558424}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 4.2, y: 0.82}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.1495214, y: 0.48624802}
   m_EdgeRadius: 0
 --- !u!114 &7478164139400863603
 MonoBehaviour:
@@ -173,4 +173,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spatula: {fileID: 0}
   _pancakePrefab: {fileID: 7475884134749093860, guid: fcaad6cf68cd94c4d95865f0e538c6e3, type: 3}
+  _cameraTransform: {fileID: 0}
+  _dropPosition: {fileID: 0}
+  _minimumPancakeThreshold: 6
+  _heightChangeStep: 1
   _pancakeCount: 0
+  _oobTriger: {fileID: 0}
