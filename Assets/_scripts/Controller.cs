@@ -2,6 +2,9 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+
 public class Controller : MonoBehaviour
 {
     [SerializeField] private Transform _spatula;
@@ -13,6 +16,10 @@ public class Controller : MonoBehaviour
     [SerializeField] private float _heightChangeStep = 1f;
     [SerializeField] public int _pancakeCount = 0;
     [SerializeField] private OOBTrigger _oobTriger;
+
+    [SerializeField] private TextMeshProUGUI _scoreUI;
+    [SerializeField] private Canvas _winPopUp;
+    [SerializeField] private Canvas _backgroundCanvas;
 
     private bool _canDrop = true;
 
@@ -27,6 +34,14 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+#if(UNITY_EDITOR) 
+        if (_pancakeCount >= 15)
+        {
+            _backgroundCanvas.enabled = false;
+            _winPopUp.enabled = true;
+        }
+#endif
         if(Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -56,6 +71,7 @@ public class Controller : MonoBehaviour
         Vector3 pancakePos = _dropPosition.position;
         GameObject pancake = Instantiate(_pancakePrefab, pancakePos, Quaternion.identity);
         _pancakeCount++;
+        _scoreUI.text = _pancakeCount.ToString();       
 
         _spatula.gameObject.SetActive(false);
         StartCoroutine(TimerForNextPancake(3));
@@ -80,6 +96,7 @@ public class Controller : MonoBehaviour
     {
         UpdateHeight(false);
         _pancakeCount--;
+        _scoreUI.text = _pancakeCount.ToString();
         Debug.Log("A pancake has fallen, current pancake count is :" + _pancakeCount);
         
     }
