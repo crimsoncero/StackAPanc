@@ -36,7 +36,7 @@ public class Controller : MonoBehaviour
     {
 
 #if(UNITY_EDITOR) 
-        if (_pancakeCount >= 15)
+        if (_pancakeCount >= 1)
         {
             _backgroundCanvas.enabled = false;
             _winPopUp.enabled = true;
