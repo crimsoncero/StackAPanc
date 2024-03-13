@@ -9,8 +9,9 @@ public class PancakeRenderer : MonoBehaviour
 
     [SerializeField] private LineRenderer _renderer;
     [SerializeField] private List<Transform> _points;
+    [SerializeField] private CircleCollider2D[] _colliders;
 
-
+    private bool _touchedStack = false;
     private void Awake()
     {
         _renderer.positionCount = _points.Count;
@@ -39,6 +40,20 @@ public class PancakeRenderer : MonoBehaviour
         _renderer.SetPositions(_points.Select(p => p.position).ToArray());
     }
 
-   
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!_colliders.Contains(collision.collider))
+            _touchedStack = true;
+    }
+    
+
+    private void OnDestroy()
+    {
+        if(_touchedStack)
+        {
+            Debug.Log("LOST");
+        }
+    }
 
 }
